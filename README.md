@@ -7,12 +7,12 @@ aws cloudformation create-stack help
 
 aws cloudformation create-stack \
   --stack-name cfn-demo-code-commit \
-  --template-body file://code_commit.yaml \
+  --template-body file://cfn-templates/code_commit.yaml \
   --capabilities CAPABILITY_IAM
 
 aws cloudformation create-stack \
   --stack-name cfn-demo-code-pipeline \
-  --template-body file://code_pipeline.yaml \
+  --template-body file://cfn-templates/code_pipeline.yaml \
   --capabilities CAPABILITY_IAM
 
 aws cloudformation delete-stack \

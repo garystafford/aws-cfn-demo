@@ -27,7 +27,7 @@ Resources:
       Description: CloudFormation Demo Test Project
       ServiceRole: !GetAtt CodeBuildRole.Arn
       Artifacts:
-        Type: no_artifacts
+        Type: CODEPIPELINE
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
@@ -43,7 +43,7 @@ Resources:
       Description: CloudFormation Demo Deploy Project
       ServiceRole: !GetAtt CodeBuildRole.Arn
       Artifacts:
-        Type: no_artifacts
+        Type: CODEPIPELINE
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
