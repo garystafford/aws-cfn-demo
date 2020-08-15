@@ -91,7 +91,7 @@ Resources:
               RunOrder: 1
         - Name: Test
           Actions:
-            - Name: BuildAction
+            - Name: TestAction
               InputArtifacts:
                 - Name: SourceOutput
               ActionTypeId:
@@ -102,19 +102,54 @@ Resources:
               Configuration:
                 ProjectName: !Ref TestProjectName
               RunOrder: 1
-        - Name: Deploy
+        - Name: CreateChangeSet
           Actions:
-            - Name: DeployAction
+            - Name: CreateChangeSetAction
               InputArtifacts:
                 - Name: SourceOutput
               ActionTypeId:
-                Category: Build
+                Category: Deploy
                 Owner: AWS
                 Version: 1
-                Provider: CodeBuild
+                Provider: CloudFormation
               Configuration:
-                ProjectName: !Ref DeployProjectName
+                ActionMode: CHANGE_SET_REPLACE
+                Capabilities: CAPABILITY_IAM
+                ChangeSetName: pipeline-changeset
+                RoleArn: !GetAtt CloudFormationServiceRole.Arn
+                StackName: cfn-demo-dynamo
+                TemplateConfiguration: "SourceOutput::dynamo_config.json"
+                TemplatePath: "SourceOutput::dynamo.yaml"
               RunOrder: 1
+        - Name: ExecuteChangeSet
+          Actions:
+            - Name: ExecuteChangeSetAction
+              InputArtifacts:
+                - Name: SourceOutput
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CloudFormation
+              Configuration:
+                ActionMode: CHANGE_SET_EXECUTE
+                Capabilities: CAPABILITY_IAM
+                ChangeSetName: pipeline-changeset
+                StackName: cfn-demo-dynamo
+              RunOrder: 1
+        # - Name: Deploy
+        #   Actions:
+        #     - Name: DeployAction
+        #       InputArtifacts:
+        #         - Name: SourceOutput
+        #       ActionTypeId:
+        #         Category: Build
+        #         Owner: AWS
+        #         Version: 1
+        #         Provider: CodeBuild
+        #       Configuration:
+        #         ProjectName: !Ref DeployProjectName
+        #       RunOrder: 1
       ArtifactStore:
         Type: S3
         Location: !Ref CodePipelineArtifactStoreBucket
@@ -187,4 +222,29 @@ Resources:
                   - "rds:*"
                   - "sqs:*"
                   - "ecs:*"
+                Resource: "*"
+  CloudFormationServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - cloudformation.amazonaws.com
+            Action: "sts:AssumeRole"
+      Path: /
+      Policies:
+        - PolicyName: AWS-CodePipeline-Service-3
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "iam:PassRole"
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - "dynamodb:*"
                 Resource: "*"
