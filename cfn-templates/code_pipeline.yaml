@@ -49,7 +49,7 @@ Resources:
         ComputeType: BUILD_GENERAL1_SMALL
         Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
       Source:
-        BuildSpec: buildspec_deploy.yml
+        BuildSpec: buildspec_update.yml
         Type: CODEPIPELINE
       TimeoutInMinutes: 5
   CodeBuildRole:
