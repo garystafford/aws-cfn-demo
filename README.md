@@ -30,14 +30,14 @@ aws cloudformation create-stack \
 aws codepipeline start-pipeline-execution --name CloudFormationDemo
 ```
 
-## Helpful Commands
+## Helpful AWS CLI Commands
 
 ```bash
 aws cloudformation help
 aws cloudformation create-stack help
 ```
 
-## Create and Update Demo Stack
+## Create and Update Demo Stack with AWS CLI
 
 ```bash
 aws cloudformation create-stack \
@@ -60,7 +60,7 @@ aws cloudformation update-stack \
                ParameterKey=WriteCapacityUnits,ParameterValue=15
 ```
 
-## Create and Execute Demo Stack Change Set
+## Create and Execute Demo Stack Change Set with AWS CLI
 
 ```bash
 aws cloudformation create-change-set \
@@ -77,7 +77,7 @@ aws cloudformation execute-change-set \
     --change-set-name demo-change-set
 ```
 
-## Delete Demo Stack
+## Delete Demo Stack with AWS CLI
 
 ```bash
 aws cloudformation delete-stack \
