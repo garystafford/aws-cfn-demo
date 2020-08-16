@@ -9,17 +9,20 @@ aws cloudformation create-stack \
   --stack-name cfn-demo-code-commit \
   --template-body file://cfn-templates/code_commit.yaml \
   --capabilities CAPABILITY_IAM
+```
 
-# cfn-demo-code-commit stack must succeed first!
+The `cfn-demo-code-commit` stack must succeed before creating next stack!
 
+```bash
 aws cloudformation create-stack \
   --stack-name cfn-demo-code-pipeline \
   --template-body file://cfn-templates/code_pipeline.yaml \
   --capabilities CAPABILITY_IAM
 ```
 
-Manually created 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
-Manually uploaded 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
+* Manually create 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
+* Manually upload 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
+* Commit files in the `code-commit-source-code` directory to the new AWS CodeCommit repository.
 
 ```bash
 aws codepipeline start-pipeline-execution --name CloudFormationDemo
