@@ -2,53 +2,66 @@
 
 _work in progress..._
 
-## Helpful Commands
-
-Manually created 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
-Manually uploaded 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
+## Getting Started AWS CodePipeline Demo
 
 ```bash
-aws cloudformation help
-
-aws cloudformation create-stack help
-
 aws cloudformation create-stack \
   --stack-name cfn-demo-code-commit \
   --template-body file://cfn-templates/code_commit.yaml \
   --capabilities CAPABILITY_IAM
 
+# cfn-demo-code-commit stack must succeed first!
+
 aws cloudformation create-stack \
   --stack-name cfn-demo-code-pipeline \
   --template-body file://cfn-templates/code_pipeline.yaml \
   --capabilities CAPABILITY_IAM
+```
 
-aws cloudformation delete-stack \
-    --stack-name cfn-demo-code-commit
+Manually created 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
+Manually uploaded 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
 
-aws codebuild start-build --project-name CloudFormationDemo
+```bash
+aws codepipeline start-pipeline-execution --name CloudFormationDemo
+```
 
+## Helpful Commands
+
+```bash
+aws cloudformation help
+aws cloudformation create-stack help
+```
+
+## Create and Update Demo Stack
+
+```bash
 aws cloudformation create-stack \
   --stack-name cfn-demo-dynamo \
-  --template-body file://dynamo_1.yaml \
+  --template-body file://dynamo.yaml \
   --parameters ParameterKey=HashKeyElementName,ParameterValue=Artist \
                ParameterKey=HashKeyElementType,ParameterValue=S \
                ParameterKey=ReadCapacityUnits,ParameterValue=10 \
                ParameterKey=WriteCapacityUnits,ParameterValue=25
 
-aws cloudformation describe-stack-events --stack-name cfn-demo-dynamo | jq .
+aws cloudformation describe-stack-events \
+    --stack-name cfn-demo-dynamo | jq .
 
 aws cloudformation update-stack \
   --stack-name cfn-demo-dynamo \
-  --template-body file://dynamo_1.yaml \
+  --template-body file://dynamo.yaml \
   --parameters ParameterKey=HashKeyElementName,ParameterValue=ArtistId \
                ParameterKey=HashKeyElementType,ParameterValue=N \
                ParameterKey=ReadCapacityUnits,ParameterValue=5 \
                ParameterKey=WriteCapacityUnits,ParameterValue=15
+```
 
+## Create and Execute Demo Stack Change Set
+
+```bash
 aws cloudformation create-change-set \
     --stack-name cfn-demo-dynamo \
-    --change-set-name v2-change-set \
-    --template-body file://dynamo_2.yaml \
+    --change-set-name demo-change-set \
+    --template-body file://dynamo_v2.yaml \
     --parameters ParameterKey=HashKeyElementName,ParameterValue=ArtistId \
                  ParameterKey=HashKeyElementType,ParameterValue=N \
                  ParameterKey=ReadCapacityUnits,ParameterValue=5 \
@@ -56,10 +69,14 @@ aws cloudformation create-change-set \
 
 aws cloudformation execute-change-set \
     --stack-name cfn-demo-dynamo \
-    --change-set-name new-table-change-set
+    --change-set-name demo-change-set
+```
 
-aws cloudformation delete-stack --stack-name cfn-demo-dynamo
+## Delete Demo Stack
 
+```bash
+aws cloudformation delete-stack \
+    --stack-name cfn-demo-dynamo
 ```
 
 ## References
