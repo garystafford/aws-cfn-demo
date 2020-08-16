@@ -1,4 +1,8 @@
-# Notes for Demo
+# AWS CloudFormation Demonstration
+
+_work in progress..._
+
+## Helpful Commands
 
 ```bash
 aws cloudformation help
@@ -61,3 +65,4 @@ aws cloudformation delete-stack --stack-name cfn-demo-dynamo
 - <https://github.com/stelligent/cloudformation_templates/blob/master/labs/codebuild/codebuild.yml>  
 - <https://kb.novaordis.com/index.php/AWS_CodeBuild_Buildspec>  
 - <https://github.com/adrienverge/yamllint>  
+- <https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-cloudformation-codecommit.html>

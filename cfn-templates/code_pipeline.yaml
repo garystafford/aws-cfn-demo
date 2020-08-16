@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  AWS CloudFormation template to build an AWS CodeBuild and CodePipeline resources
+  AWS CloudFormation template to build an AWS CodeBuild, CodePipeline, and associated resources
 Parameters:
   CodeCommitStackName:
     Type: String
@@ -72,7 +72,7 @@ Resources:
       Stages:
         - Name: Source
           Actions:
-            - Name: SourceAction
+            - Name: GetSourceCode
               ActionTypeId:
                 Category: Source
                 Owner: AWS
@@ -91,7 +91,7 @@ Resources:
               RunOrder: 1
         - Name: Test
           Actions:
-            - Name: TestAction
+            - Name: TestTemplates
               InputArtifacts:
                 - Name: SourceOutput
               ActionTypeId:
@@ -102,9 +102,9 @@ Resources:
               Configuration:
                 ProjectName: !Ref TestProjectName
               RunOrder: 1
-        - Name: CreateChangeSet
+        - Name: Deploy
           Actions:
-            - Name: CreateChangeSetAction
+            - Name: CreateChangeSet
               InputArtifacts:
                 - Name: SourceOutput
               ActionTypeId:
@@ -121,9 +121,7 @@ Resources:
                 TemplateConfiguration: "SourceOutput::dynamo_config.json"
                 TemplatePath: "SourceOutput::dynamo.yaml"
               RunOrder: 1
-        - Name: ExecuteChangeSet
-          Actions:
-            - Name: ExecuteChangeSetAction
+            - Name: ExecuteChangeSet
               InputArtifacts:
                 - Name: SourceOutput
               ActionTypeId:
@@ -136,7 +134,7 @@ Resources:
                 Capabilities: CAPABILITY_IAM
                 ChangeSetName: pipeline-changeset
                 StackName: cfn-demo-dynamo
-              RunOrder: 1
+              RunOrder: 2
         # - Name: Deploy
         #   Actions:
         #     - Name: DeployAction
