@@ -4,6 +4,8 @@ _work in progress..._
 
 Demonstration of an Infrastructure as Code (IaC) CI/CD pipeline. Use AWS CloudFormation to create AWS CodePipeline pipeline and associated resources. Then, use the pipeline to test and deploy AWS resources, using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
 
+Compare the use of a pipeline with using the AWS CLI to execute similar CloudFormation functionality.
+
 ## Getting Started with AWS CodePipeline Demo
 
 ```bash
