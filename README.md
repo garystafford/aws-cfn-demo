@@ -37,7 +37,7 @@ aws cloudformation help
 aws cloudformation create-stack help
 ```
 
-## Create and Update Demo Stack with AWS CLI
+## Create and Update Demo Stack using AWS CLI
 
 ```bash
 aws cloudformation create-stack \
@@ -60,7 +60,7 @@ aws cloudformation update-stack \
                ParameterKey=WriteCapacityUnits,ParameterValue=15
 ```
 
-## Create and Execute Demo Stack Change Set with AWS CLI
+## Create and Execute Demo Stack Change Set using AWS CLI
 
 ```bash
 aws cloudformation create-change-set \
@@ -77,7 +77,17 @@ aws cloudformation execute-change-set \
     --change-set-name demo-change-set
 ```
 
-## Delete Demo Stack with AWS CLI
+## Detect Stack Drift using AWS CLI
+
+```bash
+aws cloudformation detect-stack-drift \
+    --stack-name cfn-demo-dynamo
+
+aws cloudformation describe-stack-resource-drifts \
+    --stack-name cfn-demo-dynamo
+```
+
+## Delete Demo Stack using AWS CLI
 
 ```bash
 aws cloudformation delete-stack \
