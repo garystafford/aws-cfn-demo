@@ -4,6 +4,9 @@ _work in progress..._
 
 ## Helpful Commands
 
+Manually created 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
+Manually uploaded 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
+
 ```bash
 aws cloudformation help
 
