@@ -42,7 +42,6 @@ git commit -m"Initial commit"
 git push
 ```
 
-
 The `cfn-demo-code-commit` stack must succeed before creating next stack!
 
 ```bash
