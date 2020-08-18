@@ -31,7 +31,8 @@ git config --global credential.UseHttpPath true
 git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
 
 cd cfn-demo-repo
-mv ../aws-cfn-demo/code-commit-source-code/*.* .
+cp ../aws-cfn-demo/code-commit-source-code/*.* .
+cp ../aws-cfn-demo/code-commit-source-code/.gitignore .
 ```
 
 Commit files in the `code-commit-source-code` directory to the new AWS CodeCommit repository.
