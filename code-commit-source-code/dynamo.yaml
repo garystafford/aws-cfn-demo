@@ -21,28 +21,18 @@ Parameters:
     MaxValue: 10000
     ConstraintDescription: must be between 5 and 100000
 Resources:
-  ConcertTable:
+  EmployeeTable:
     Type: "AWS::DynamoDB::Table"
     Properties:
       AttributeDefinitions:
-        -
-          AttributeName: "ArtistId"
-          AttributeType: "N"
-        -
-          AttributeName: "Artist"
+        - AttributeName: "EmployeeID"
           AttributeType: "S"
-        -
-          AttributeName: "Concert"
-          AttributeType: "S"
-        -
-          AttributeName: "TicketSales"
+        - AttributeName: "EmployeeName"
           AttributeType: "S"
       KeySchema:
-        -
-          AttributeName: "ArtistId"
+        - AttributeName: "EmployeeID"
           KeyType: "HASH"
-        -
-          AttributeName: "Concert"
+        - AttributeName: "EmployeeName"
           KeyType: "RANGE"
       ProvisionedThroughput:
         ReadCapacityUnits: !Ref ReadCapacityUnits
@@ -88,5 +78,5 @@ Resources:
   #             Resource: arn:aws:logs:*:*:*
 Outputs:
   TableName:
-    Value: !Ref ConcertTable
+    Value: !Ref EmployeeTable
     Description: Table name of the newly created DynamoDB table
