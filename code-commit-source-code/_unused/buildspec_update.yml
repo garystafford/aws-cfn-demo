@@ -1,0 +1,19 @@
+---
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - |
+        aws cloudformation create-change-set \
+            --stack-name cfn-demo-dynamo \
+            --change-set-name dynamo-change-set \
+            --template-body file://dynamo_2.yaml \
+            --parameters ParameterKey=HashKeyElementName,ParameterValue=ArtistId \
+                        ParameterKey=HashKeyElementType,ParameterValue=N \
+                        ParameterKey=ReadCapacityUnits,ParameterValue=5 \
+                        ParameterKey=WriteCapacityUnits,ParameterValue=15
+      - |
+        aws cloudformation execute-change-set \
+          --stack-name dynamo-change-set \
+          --change-set-name new-table-change-set

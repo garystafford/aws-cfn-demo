@@ -1,0 +1,92 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  AWS CloudFormation Sample Template DynamoDB_Table: This template demonstrates
+  the creation of a DynamoDB table.  **WARNING** This template creates an Amazon
+  DynamoDB table. You will be billed for the AWS resources used if you create a
+  stack from this template.
+Parameters:
+  ReadCapacityUnits:
+    Description: Provisioned read throughput
+    Type: Number
+    Default: 5
+    MinValue: 5
+    MaxValue: 10000
+    ConstraintDescription: must be between 5 and 10000
+  WriteCapacityUnits:
+    Description: Provisioned write throughput
+    Type: Number
+    Default: 10
+    MinValue: 5
+    MaxValue: 10000
+    ConstraintDescription: must be between 5 and 100000
+Resources:
+  ConcertTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: "ArtistId"
+          AttributeType: "N"
+        -
+          AttributeName: "Artist"
+          AttributeType: "S"
+        -
+          AttributeName: "Concert"
+          AttributeType: "S"
+        -
+          AttributeName: "TicketSales"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "ArtistId"
+          KeyType: "HASH"
+        -
+          AttributeName: "Concert"
+          KeyType: "RANGE"
+      ProvisionedThroughput:
+        ReadCapacityUnits: !Ref ReadCapacityUnits
+        WriteCapacityUnits: !Ref WriteCapacityUnits
+  # LambdaFunction:
+  #   Type: 'AWS::Lambda::Function'
+  #   Properties:
+  #     Code:
+  #       ZipFile: |
+  #           import boto3
+
+  #           def lambda_handler(event, context):
+  #               client = boto3.resource('dynamodb')
+  #               table = client.Table("dynamoDB")
+  #               print(table.table_status)
+
+  #               table.put_item(Item= {'id': '34','company':  'microsoft'})
+  #       Handler: index.lambda_handler
+  #     Role: !GetAtt LambdaExecutionRole.Arn
+  #     Runtime: python3.7
+  #     Timeout: 60
+  #     MemorySize: 128
+  # LambdaExecutionRole:
+  #   Type: 'AWS::IAM::Role'
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: '2012-10-17'
+  #       Statement:
+  #       - Effect: Allow
+  #         Principal:
+  #           Service:
+  #           - lambda.amazonaws.com
+  #         Action:
+  #         - sts:AssumeRole
+  #     Policies:
+  #       - PolicyName: allowLambdaLogs
+  #         PolicyDocument:
+  #           Version: '2012-10-17'
+  #           Statement:
+  #           - Effect: Allow
+  #             Action:
+  #             - logs:*
+  #             Resource: arn:aws:logs:*:*:*
+Outputs:
+  TableName:
+    Value: !Ref ConcertTable
+    Description: Table name of the newly created DynamoDB table

@@ -1,0 +1,12 @@
+---
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pip install yamllint
+      - yes | yum install php-jsonlint
+  build:
+    commands:
+      - jsonlint-php dynamo_config.json
+      - aws cloudformation validate-template --template-body file://dynamo.yaml

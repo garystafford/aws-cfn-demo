@@ -1,0 +1,14 @@
+---
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - |
+        aws cloudformation create-stack \
+          --stack-name cfn-demo-dynamo \
+          --template-body file://dynamo.yaml \
+          --parameters ParameterKey=HashKeyElementName,ParameterValue=Artist \
+                       ParameterKey=HashKeyElementType,ParameterValue=S \
+                       ParameterKey=ReadCapacityUnits,ParameterValue=10 \
+                       ParameterKey=WriteCapacityUnits,ParameterValue=25

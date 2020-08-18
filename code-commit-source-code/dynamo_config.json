@@ -1,0 +1,8 @@
+{
+    "Parameters": {
+        "HashKeyElementName": "Artist",
+        "HashKeyElementType": "S",
+        "ReadCapacityUnits": "10",
+        "WriteCapacityUnits": "25"
+    }
+}
