@@ -13,11 +13,11 @@ Parameters:
     Default: master
 Resources:
   DemoSNSTopic:
-    Type: AWS::SNS::Topic
+    Type: "AWS::SNS::Topic"
     Properties:
       TopicName: "cfn-demo-code-commit-topic"
   DemoRepo:
-    Type: AWS::CodeCommit::Repository
+    Type: "AWS::CodeCommit::Repository"
     Properties:
       RepositoryName: !Ref RepositoryName
       RepositoryDescription: A repository for CloudFormation demo source code
