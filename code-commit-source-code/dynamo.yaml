@@ -65,7 +65,7 @@ Resources:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
-        Version: "2012-10-17"
+        Version: 2012-10-17
         Statement:
           - Effect: Allow
             Principal:
@@ -74,14 +74,22 @@ Resources:
             Action:
               - sts:AssumeRole
       Policies:
-        - PolicyName: allowLambdaLogs
+        - PolicyName: AllowLambdaLogs
           PolicyDocument:
-            Version: "2012-10-17"
+            Version: 2012-10-17
             Statement:
               - Effect: Allow
                 Action:
-                  - logs:*
+                  - "logs:*"
                 Resource: arn:aws:logs:*:*:*
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "dynamodb:*"
+                Resource: !GetAtt EmployeeTable.Arn
 Outputs:
   TableName:
     Value: !Ref EmployeeTable
