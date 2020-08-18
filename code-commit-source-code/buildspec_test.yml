@@ -8,5 +8,6 @@ phases:
       - yes | yum install php-jsonlint
   build:
     commands:
-      - jsonlint-php dynamo_config.json
+      - jsonlint-php dynamo_config.json # json lint the config
+      - yamllint -d relaxed dynamo.yaml # yaml lint the template
       - aws cloudformation validate-template --template-body file://dynamo.yaml

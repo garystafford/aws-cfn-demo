@@ -37,45 +37,50 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: !Ref ReadCapacityUnits
         WriteCapacityUnits: !Ref WriteCapacityUnits
-  # LambdaFunction:
-  #   Type: 'AWS::Lambda::Function'
-  #   Properties:
-  #     Code:
-  #       ZipFile: |
-  #           import boto3
+  LambdaFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Environment: 
+        Variables: 
+          TABLE_NAME : !Ref EmployeeTable
+      Code:
+        ZipFile: |
+            import boto3
+            import os
 
-  #           def lambda_handler(event, context):
-  #               client = boto3.resource('dynamodb')
-  #               table = client.Table("dynamoDB")
-  #               print(table.table_status)
+            table_name = os.environ['TABLE_NAME']
 
-  #               table.put_item(Item= {'id': '34','company':  'microsoft'})
-  #       Handler: index.lambda_handler
-  #     Role: !GetAtt LambdaExecutionRole.Arn
-  #     Runtime: python3.7
-  #     Timeout: 60
-  #     MemorySize: 128
-  # LambdaExecutionRole:
-  #   Type: 'AWS::IAM::Role'
-  #   Properties:
-  #     AssumeRolePolicyDocument:
-  #       Version: '2012-10-17'
-  #       Statement:
-  #       - Effect: Allow
-  #         Principal:
-  #           Service:
-  #           - lambda.amazonaws.com
-  #         Action:
-  #         - sts:AssumeRole
-  #     Policies:
-  #       - PolicyName: allowLambdaLogs
-  #         PolicyDocument:
-  #           Version: '2012-10-17'
-  #           Statement:
-  #           - Effect: Allow
-  #             Action:
-  #             - logs:*
-  #             Resource: arn:aws:logs:*:*:*
+            def lambda_handler(event, context):
+                client = boto3.resource('dynamodb')
+                table = client.Table(table_name)
+                print(table.table_status)
+                table.put_item(Item= {'EmployeeId': '1','Employee':  'Jeff Bezos'})
+        Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.7
+      Timeout: 60
+      MemorySize: 128
+  LambdaExecutionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Policies:
+        - PolicyName: allowLambdaLogs
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - logs:*
+              Resource: arn:aws:logs:*:*:*
 Outputs:
   TableName:
     Value: !Ref EmployeeTable

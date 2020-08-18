@@ -283,7 +283,7 @@ Resources:
             Action: "sts:AssumeRole"
       Path: /
       Policies:
-        - PolicyName: AWS-CodePipeline-Service-3
+        - PolicyName: AWS-CodePipeline-CloudFormation
           PolicyDocument:
             Version: 2012-10-17
             Statement:
@@ -294,4 +294,5 @@ Resources:
               - Effect: Allow
                 Action:
                   - "dynamodb:*"
+                  - "lambda:*"
                 Resource: "*"
