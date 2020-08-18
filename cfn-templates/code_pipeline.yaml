@@ -295,4 +295,5 @@ Resources:
                 Action:
                   - "dynamodb:*"
                   - "lambda:*"
+                  - "iam:*"
                 Resource: "*"

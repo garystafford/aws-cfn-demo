@@ -7,8 +7,10 @@ Resources:
     Type: AWS::IAM::Group
     DependsOn: CodeCommitPowerUser
     Properties:
-      ManagedPolicyArns:
-        - "arn:aws:iam::aws:policy/AWSCodeCommitPowerUser"
+      ManagedPolicyArns: !Join
+        - ""
+        - - "arn:aws:iam::aws:policy/"
+          - !Ref AWSCodeCommitPowerUser
   CodeCommitPowerUser:
     Type: AWS::IAM::User
     Properties:

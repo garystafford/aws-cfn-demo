@@ -1,0 +1,11 @@
+[Container] 2020/08/18 16:54:23 Running command yamllint -d relaxed dynamo.yaml
+dynamo.yaml
+  43:19     error    trailing spaces  (trailing-spaces)
+  44:19     error    trailing spaces  (trailing-spaces)
+  45:21     warning  too many spaces before colon  (colons)
+  57:81     warning  line too long (83 > 80 characters)  (line-length)
+  69:9      warning  wrong indentation: expected 10 but found 8  (indentation)
+  72:13     warning  wrong indentation: expected 14 but found 12  (indentation)
+  74:11     warning  wrong indentation: expected 12 but found 10  (indentation)
+  80:13     warning  wrong indentation: expected 14 but found 12  (indentation)
+  82:15     warning  wrong indentation: expected 16 but found 14  (indentation)
