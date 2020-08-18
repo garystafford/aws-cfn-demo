@@ -10,10 +10,38 @@ Compare the use of a pipeline with using the AWS CLI to execute similar CloudFor
 
 ```bash
 aws cloudformation create-stack \
+  --stack-name cfn-demo-iam \
+  --template-body file://cfn-templates/code_commit_iam.yaml \
+  --capabilities CAPABILITY_IAM
+
+aws cloudformation create-stack \
   --stack-name cfn-demo-code-commit \
   --template-body file://cfn-templates/code_commit.yaml \
   --capabilities CAPABILITY_IAM
 ```
+
+Manually create 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
+
+Manually upload 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
+
+```bash
+git config --global credential.helper '!aws codecommit credential-helper $@'
+git config --global credential.UseHttpPath true
+
+git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
+
+cd cfn-demo-repo
+mv ../aws-cfn-demo/code-commit-source-code/*.* .
+```
+
+Commit files in the `code-commit-source-code` directory to the new AWS CodeCommit repository.
+
+```bash
+git add -A
+git commit -m"Initial commit"
+git push
+```
+
 
 The `cfn-demo-code-commit` stack must succeed before creating next stack!
 
@@ -23,10 +51,6 @@ aws cloudformation create-stack \
   --template-body file://cfn-templates/code_pipeline.yaml \
   --capabilities CAPABILITY_IAM
 ```
-
-* Manually create 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
-* Manually upload 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
-* Commit files in the `code-commit-source-code` directory to the new AWS CodeCommit repository.
 
 ```bash
 aws codepipeline start-pipeline-execution --name CloudFormationDemo
@@ -103,3 +127,5 @@ aws cloudformation delete-stack \
 - <https://kb.novaordis.com/index.php/AWS_CodeBuild_Buildspec>  
 - <https://github.com/adrienverge/yamllint>  
 - <https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-cloudformation-codecommit.html>
+- <https://aws.amazon.com/blogs/devops/custom-lookup-using-aws-lambda-and-amazon-dynamodb/>
+- <https://docs.aws.amazon.com/codebuild/latest/userguide/jenkins-plugin.html>

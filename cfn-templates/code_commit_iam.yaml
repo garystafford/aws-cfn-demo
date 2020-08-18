@@ -1,0 +1,37 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  AWS CloudFormation template to build an IAM User and Group for use with AWS CodeCommit
+Resources:
+  CodeCommitPowerUserGroup:
+    Type: AWS::IAM::Group
+    DependsOn: CodeCommitPowerUser
+    Properties:
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AWSCodeCommitPowerUser"
+  CodeCommitPowerUser:
+    Type: AWS::IAM::User
+    Properties:
+      Path: "/"
+      LoginProfile:
+        Password: myP@ssW0rd
+  CFNKeys:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName:
+        Ref: CodeCommitPowerUser
+  AddUserToGroup:
+    Type: AWS::IAM::UserToGroupAddition
+    DependsOn: CodeCommitPowerUserGroup
+    Properties:
+      GroupName:
+        Ref: CodeCommitPowerUserGroup
+      Users:
+        - Ref: CodeCommitPowerUser
+Outputs:
+  AccessKeyId:
+    Value: !Ref CFNKeys
+    Description: AccessKeyId
+  SecretAccessKey:
+    Value: !GetAtt CFNKeys.SecretAccessKey
+    Description: SecretAccessKey

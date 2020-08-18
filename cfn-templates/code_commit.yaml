@@ -6,65 +6,30 @@ Parameters:
   RepositoryName:
     Description: CodeCommit repository name
     Type: String
-    Default: CFNDemoRepo
+    Default: cfn-demo-repo
   BranchName:
     Description: CodeCommit branch name
     Type: String
     Default: master
-  ProjectName:
-    Description: CodeBuild project name
-    Type: String
-    Default: DemoProject
 Resources:
   DemoSNSTopic:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: "DemoTopic"
+      TopicName: "cfn-demo-code-commit-topic"
   DemoRepo:
     Type: AWS::CodeCommit::Repository
     Properties:
       RepositoryName: !Ref RepositoryName
-      RepositoryDescription: a repo for CloudFormation demo source code
+      RepositoryDescription: A repository for CloudFormation demo source code
       Triggers:
         - Name: MasterTrigger
           DestinationArn:
             Ref: DemoSNSTopic
           Branches:
-            - Master
+            - master
           Events:
             - all
-  CodeCommitPowerUserGroup:
-    Type: AWS::IAM::Group
-    DependsOn: CodeCommitPowerUser
-    Properties:
-      ManagedPolicyArns:
-        - "arn:aws:iam::aws:policy/AWSCodeCommitPowerUser"
-  CodeCommitPowerUser:
-    Type: AWS::IAM::User
-    Properties:
-      Path: "/"
-      LoginProfile:
-        Password: myP@ssW0rd
-  CFNKeys:
-    Type: AWS::IAM::AccessKey
-    Properties:
-      UserName:
-        Ref: CodeCommitPowerUser
-  AddUserToGroup:
-    Type: AWS::IAM::UserToGroupAddition
-    DependsOn: CodeCommitPowerUserGroup
-    Properties:
-      GroupName:
-        Ref: CodeCommitPowerUserGroup
-      Users:
-        - Ref: CodeCommitPowerUser
 Outputs:
-  AccessKeyId:
-    Value: !Ref CFNKeys
-    Description: AccessKeyId
-  SecretAccessKey:
-    Value: !GetAtt CFNKeys.SecretAccessKey
-    Description: SecretAccessKey
   RepositoryName:
     Value: !Ref RepositoryName
     Description: CodeCommit repository name
@@ -75,3 +40,13 @@ Outputs:
     Description: CodeCommit branch name
     Export:
       Name: !Join ["-", [!Ref "AWS::StackName", "branch-name"]]
+  RepositoryUrl:
+    Value: !Join
+      - ""
+      - - "https://git-codecommit."
+        - !Ref "AWS::Region"
+        - ".amazonaws.com/v1/repos/"
+        - !Ref RepositoryName
+    Description: CodeCommit repository URL
+    Export:
+      Name: !Join ["-", [!Ref "AWS::StackName", "repository-url"]]
