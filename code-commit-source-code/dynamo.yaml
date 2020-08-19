@@ -21,18 +21,18 @@ Parameters:
     MaxValue: 10000
     ConstraintDescription: must be between 5 and 100000
 Resources:
-  EmployeeTable:
+  BookTable:
     Type: "AWS::DynamoDB::Table"
     Properties:
       AttributeDefinitions:
-        - AttributeName: "EmployeeID"
+        - AttributeName: "AuthorName"
           AttributeType: "S"
-        - AttributeName: "EmployeeName"
+        - AttributeName: "BookTitle"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "EmployeeID"
+        - AttributeName: "AuthorName"
           KeyType: "HASH"
-        - AttributeName: "EmployeeName"
+        - AttributeName: "BookTitle"
           KeyType: "RANGE"
       ProvisionedThroughput:
         ReadCapacityUnits: !Ref ReadCapacityUnits
@@ -42,7 +42,7 @@ Resources:
     Properties:
       Environment:
         Variables:
-          TABLE_NAME: !Ref EmployeeTable
+          TABLE_NAME: !Ref BookTable
       Code:
         ZipFile: |
           import boto3
@@ -54,8 +54,14 @@ Resources:
           def lambda_handler(event, context):
               client = boto3.resource('dynamodb')
               table = client.Table(table_name)
-              print(table.table_status)
-              table.put_item(Item={'EmployeeId': '1', 'Employee':  'Test Employee'})
+              book = {
+                  'AuthorName': event['AuthorName'],
+                  'BookTitle': event['BookTitle'],
+                  'PublishedPublished': event['PublishedPublished'],
+                  'OriginalLanguage': event['OriginalLanguage'],
+                  'ApproximateSales': event['ApproximateSales']
+              }
+              table.put_item(Item=book)
       Handler: index.lambda_handler
       Role: !GetAtt LambdaExecutionRole.Arn
       Runtime: python3.7
@@ -89,8 +95,8 @@ Resources:
               - Effect: Allow
                 Action:
                   - "dynamodb:*"
-                Resource: !GetAtt EmployeeTable.Arn
+                Resource: !GetAtt BookTable.Arn
 Outputs:
   TableName:
-    Value: !Ref EmployeeTable
+    Value: "BookTable"
     Description: Table name of the newly created DynamoDB table

@@ -7,5 +7,11 @@ table_name = os.environ['TABLE_NAME']
 def lambda_handler(event, context):
     client = boto3.resource('dynamodb')
     table = client.Table(table_name)
-    print(table.table_status)
-    table.put_item(Item={'EmployeeId': '1', 'Employee': 'Jeff Bezos'})
+    book = {
+        'AuthorName': event['AuthorName'],
+        'BookTitle': event['BookTitle'],
+        'PublishedPublished': event['PublishedPublished'],
+        'OriginalLanguage': event['OriginalLanguage'],
+        'ApproximateSales': event['ApproximateSales']
+    }
+    table.put_item(Item=book)

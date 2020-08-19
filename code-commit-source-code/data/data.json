@@ -1,0 +1,44 @@
+[
+  {
+    "AuthorName": "Charles Dickens",
+    "BookTitle": "A Tale of Two Cities",
+    "PublishedPublished": 1859,
+    "OriginalLanguage": "English",
+    "ApproximateSales": 200000000
+  },
+  {
+    "AuthorName": "Antoine de Saint-Exupéry",
+    "BookTitle": "The Little Prince (Le Petit Prince)",
+    "PublishedPublished": 1943,
+    "OriginalLanguage": "French",
+    "ApproximateSales": 150000000
+  },
+  {
+    "AuthorName": "J. K. Rowling",
+    "BookTitle": "Harry Potter and the Philosopher’s Stone",
+    "PublishedPublished": 1997,
+    "OriginalLanguage": "English",
+    "ApproximateSales": 120000000
+  },
+  {
+    "AuthorName": "J. R. R. Tolkien",
+    "BookTitle": "The Hobbit",
+    "PublishedPublished": 1937,
+    "OriginalLanguage": "English",
+    "ApproximateSales": 100000000
+  },
+  {
+    "AuthorName": "Agatha Christie",
+    "BookTitle": "And Then There Were None",
+    "PublishedPublished": 1939,
+    "OriginalLanguage": "English",
+    "ApproximateSales": 100000000
+  },
+  {
+    "AuthorName": "Cao Xueqin",
+    "BookTitle": "Dream of the Red Chamber (紅樓夢)",
+    "PublishedPublished": 1791,
+    "OriginalLanguage": "Chinese",
+    "ApproximateSales": 100000000
+  }
+]
