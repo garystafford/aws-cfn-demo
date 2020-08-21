@@ -18,7 +18,7 @@ Parameters:
     MaxValue: 1000
     ConstraintDescription: must be between 5 and 100000
 Resources:
-  BookTable:
+  Books:
     Type: "AWS::DynamoDB::Table"
     Properties:
       AttributeDefinitions:
@@ -48,7 +48,7 @@ Resources:
       Description: Scans and outputs DynamoDB table
       Environment:
         Variables:
-          TABLE_NAME: !Ref BookTable
+          TABLE_NAME: !Ref Books
       Code:
         ZipFile: |
           import boto3
@@ -101,8 +101,8 @@ Resources:
               - Effect: Allow
                 Action:
                   - "dynamodb:*"
-                Resource: !GetAtt BookTable.Arn
+                Resource: !GetAtt Books.Arn
 Outputs:
   TableName:
-    Value: !Ref BookTable
+    Value: !Ref Books
     Description: Name of the newly created DynamoDB table

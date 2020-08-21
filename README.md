@@ -20,15 +20,39 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
-Manually create 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
+For HTTPS: Manually create 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
 
-Manually upload 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
+For SSH: Manually upload 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
+
+```bash
+cat ~/.ssh/id_rsa.pub | pbcopy
+```
+
+Remove older codecommit cred entries if necessary
+
+- <https://docs.aws.amazon.com/codecommit/latest/userguide/troubleshooting-ch.html#troubleshooting-macoshttps>  
+- <https://stackoverflow.com/a/20195558/580268>  
+
+```bash
+git config --global credential.helper osxkeychain
+```
+
+```bash
+nano ~/.ssh/known_hosts
+```
 
 ```bash
 git config --global credential.helper '!aws codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
 
+# for https:
 git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
+
+# ignore empty repo message...
+
+# or for ssh:
+git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
+
 
 cd cfn-demo-repo
 cp ../aws-cfn-demo/code-commit-source-code/*.* .
@@ -70,9 +94,7 @@ aws cloudformation create-stack help
 aws cloudformation create-stack \
   --stack-name cfn-demo-dynamo \
   --template-body file://dynamo.yaml \
-  --parameters ParameterKey=HashKeyElementName,ParameterValue=Artist \
-               ParameterKey=HashKeyElementType,ParameterValue=S \
-               ParameterKey=ReadCapacityUnits,ParameterValue=10 \
+  --parameters ParameterKey=ReadCapacityUnits,ParameterValue=10 \
                ParameterKey=WriteCapacityUnits,ParameterValue=25
 
 aws cloudformation describe-stack-events \
@@ -81,9 +103,7 @@ aws cloudformation describe-stack-events \
 aws cloudformation update-stack \
   --stack-name cfn-demo-dynamo \
   --template-body file://dynamo.yaml \
-  --parameters ParameterKey=HashKeyElementName,ParameterValue=ArtistId \
-               ParameterKey=HashKeyElementType,ParameterValue=N \
-               ParameterKey=ReadCapacityUnits,ParameterValue=5 \
+  --parameters ParameterKey=ReadCapacityUnits,ParameterValue=5 \
                ParameterKey=WriteCapacityUnits,ParameterValue=15
 ```
 
@@ -94,9 +114,7 @@ aws cloudformation create-change-set \
     --stack-name cfn-demo-dynamo \
     --change-set-name demo-change-set \
     --template-body file://dynamo_v2.yaml \
-    --parameters ParameterKey=HashKeyElementName,ParameterValue=ArtistId \
-                 ParameterKey=HashKeyElementType,ParameterValue=N \
-                 ParameterKey=ReadCapacityUnits,ParameterValue=5 \
+    --parameters ParameterKey=ReadCapacityUnits,ParameterValue=5 \
                  ParameterKey=WriteCapacityUnits,ParameterValue=15
 
 aws cloudformation execute-change-set \
@@ -114,11 +132,19 @@ aws cloudformation describe-stack-resource-drifts \
     --stack-name cfn-demo-dynamo
 ```
 
-## Delete Demo Stack using AWS CLI
+## Delete Demo Stacks using AWS CLI
+
+Delete one stack at a time, letting each one finish completely, before proceeding to the next stack.
 
 ```bash
-aws cloudformation delete-stack \
-    --stack-name cfn-demo-dynamo
+aws cloudformation delete-stack --stack-name cfn-demo-dynamo
+
+aws cloudformation delete-stack --stack-name cfn-demo-code-pipeline
+aws cloudformation delete-stack --stack-name cfn-demo-code-commit
+
+# manaully delete HTTPS Git credentials for AWS CodeCommit 
+# from CodeCommitPowerUser from console or next step will fail
+aws cloudformation delete-stack --stack-name cfn-demo-iam
 ```
 
 ## References

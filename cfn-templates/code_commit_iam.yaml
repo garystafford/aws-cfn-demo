@@ -12,7 +12,9 @@ Resources:
   CodeCommitUserGroup:
     Type: "AWS::IAM::Group"
     Properties:
-      ManagedPolicyArns: !GetAtt CodeCommitPowerUser.Arn
+      ManagedPolicyArns: [
+        "arn:aws:iam::aws:policy/PowerUserAccess"
+      ]
   CodeCommitUser:
     Type: "AWS::IAM::User"
     Properties:
