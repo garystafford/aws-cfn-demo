@@ -4,15 +4,15 @@ _work in progress..._
 
 ## Overview
 
-Demonstration of an Infrastructure as Code (IaC) CI/CD pipeline. Use AWS CloudFormation to create an AWS CodePipeline pipeline and associated AWS resources. Then, use the pipeline to test and deploy AWS resources, including Amazon DynamoDB and AWS Lambda, using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
+Demonstration of an IaC CI/CD pipeline. Use AWS CloudFormation to create an AWS CodePipeline pipeline and associated AWS resources. Then, use the pipeline to test and deploy AWS resources, including Amazon DynamoDB and AWS Lambda, using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
 
-The demonstration is useful for comparing the advantages of CI/CD, Infrastructure as Code, and pipeline automation, to using the AWS CLI in an ad hoc fashion to execute similar CloudFormation functionality.
+The demonstration is useful for comparing the advantages of Continuous Integration and Continuous Delivery (CI/CD), Infrastructure as Code (IaC), and pipeline automation, to using the [AWS Command Line Interface](https://aws.amazon.com/cli/) (AWS CLI) in an ad hoc fashion to execute similar CloudFormation functionality.
 
 Current linting and validation testing strategy includes the use of the following:
-1. `yamllint` - CloudFormation template
-2. `cfn-lint` - CloudFormation template 
-3. `jsonlint` (`php-jsonlint`) - CloudFormation template config (JSON)
-4. `cloudformation validate-template` - CloudFormation template
+1. [`yamllint`](https://yamllint.readthedocs.io/en/stable/#) - CloudFormation template
+2. [`cfn-lint`](https://github.com/aws-cloudformation/cfn-python-lint) - CloudFormation template 
+3. [`jsonlint`](http://manpages.ubuntu.com/manpages/cosmic/man1/jsonlint-php.1.html) (`php-jsonlint`) - CloudFormation template config (JSON)
+4. [`cloudformation validate-template`](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/validate-template.html) - CloudFormation template
 
 Future testing strategies to include AWS [`taskcat`](https://github.com/aws-quickstart/taskcat).
 
