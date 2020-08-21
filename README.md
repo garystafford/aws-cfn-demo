@@ -2,11 +2,11 @@
 
 _work in progress..._
 
-Demonstration of an Infrastructure as Code (IaC) CI/CD pipeline. Use AWS CloudFormation to create an AWS CodePipeline pipeline and associated AWS resources.
+## Overview
 
-Then, use the pipeline to test and deploy AWS resources, including Amazon DynamoDB and AWS Lambda, using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
+Demonstration of an Infrastructure as Code (IaC) CI/CD pipeline. Use AWS CloudFormation to create an AWS CodePipeline pipeline and associated AWS resources. Then, use the pipeline to test and deploy AWS resources, including Amazon DynamoDB and AWS Lambda, using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
 
-Demo is useful for comparing the use of a CI/CD and a pipeline with using the AWS CLI directly to execute similar CloudFormation functionality.
+The demonstration is useful for comparing the advantages of CI/CD, Infrastructure as Code, and pipeline automation, to using the AWS CLI in an ad hoc fashion to execute similar CloudFormation functionality.
 
 Current linting and validation testing strategy includes the use of the following:
 1. `yamllint` - CloudFormation template
