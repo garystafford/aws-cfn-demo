@@ -225,7 +225,8 @@ aws cloudformation create-stack \
 Pipeline should automatically start. If not use the following command.
 
 ```bash
-aws codepipeline start-pipeline-execution --name CloudFormationDemo
+aws codepipeline start-pipeline-execution \
+    --name CloudFormationDemo
 ```
 
 Manually approve the CloudFormation Change set in the new Amazon CodePipeline Deploy stage, using the Amazon Management Console. Once the pipelines completes, the stack is deployed.
@@ -256,7 +257,8 @@ git push
 Pipeline should automatically start. If not use the following command.
 
 ```bash
-aws codepipeline start-pipeline-execution --name CloudFormationDemo
+aws codepipeline start-pipeline-execution \
+    --name CloudFormationDemo
 ```
 
 ## Delete CloudFormation Stacks using AWS CLI
@@ -264,16 +266,25 @@ aws codepipeline start-pipeline-execution --name CloudFormationDemo
 Delete one stack at a time, letting each one finish completely, before proceeding to the next stack.
 
 ```bash
-aws cloudformation delete-stack --stack-name cfn-demo-dynamo
+aws cloudformation delete-stack \
+    --stack-name cfn-demo-dynamo
+```
 
-aws cloudformation delete-stack --stack-name cfn-demo-code-pipeline
-aws cloudformation delete-stack --stack-name cfn-demo-code-commit
+```bash
+aws cloudformation delete-stack \
+    --stack-name cfn-demo-code-pipeline
+```
+
+```bash
+aws cloudformation delete-stack \
+    --stack-name cfn-demo-code-commit
 ```
 
 Manually delete 'HTTPS Git credentials for AWS CodeCommit' entry from AWS IAM User, `CodeCommitUser`,  using the AWS Management Console, or next step will fail.
 
 ```bash
-aws cloudformation delete-stack --stack-name cfn-demo-iam
+aws cloudformation delete-stack \
+    --stack-name cfn-demo-iam
 ```
 
 ## References
