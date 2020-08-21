@@ -1,6 +1,6 @@
 # AWS CloudFormation CI/CD Demonstration
 
-_work in progress..._
+_Work in progress..._
 
 ## Overview
 
@@ -8,13 +8,15 @@ Demonstration of an IaC CI/CD pipeline. Use [AWS CloudFormation](https://docs.aw
 
 The demonstration is useful for comparing the advantages of Continuous Integration and Continuous Delivery (CI/CD), Infrastructure as Code (IaC), and pipeline automation, to using the [AWS Command Line Interface](https://aws.amazon.com/cli/) (AWS CLI) in an ad hoc fashion to execute similar CloudFormation functionality.
 
-The current linting and validation testing strategy, found the [`buildspec_test.yml`](code-commit-source-code/buildspec_test.yml) file, includes the use of the following:
+Current linting and validation testing tools demonstrated herein, include the use of the following:
 1. [`yamllint`](https://yamllint.readthedocs.io/en/stable/#) - CloudFormation template
 2. [`cfn-lint`](https://github.com/aws-cloudformation/cfn-python-lint) - CloudFormation template 
 3. [`jsonlint`](http://manpages.ubuntu.com/manpages/cosmic/man1/jsonlint-php.1.html) (`php-jsonlint`) - CloudFormation template config (JSON)
 4. [`cloudformation validate-template`](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/validate-template.html) - CloudFormation template
 
-Future testing strategies to include AWS [`taskcat`](https://github.com/aws-quickstart/taskcat).
+Future testing tools to include AWS [`taskcat`](https://github.com/aws-quickstart/taskcat).
+
+Configuration of these tools can be found in the [`buildspec_test.yml`](code-commit-source-code/buildspec_test.yml) file.
 
 ## Helpful AWS CLI Commands
 
@@ -25,7 +27,7 @@ aws cloudformation <command> help
 
 ## Prerequisites
 
-The demonstration requires you have an AWS account with the proper level of access to create the required resources, and the following tools installed locally.
+The demonstration requires you have an AWS account with the proper level of access to create the required resources, and the following tools installed locally:
 1. [git](https://git-scm.com/)
 2. [AWS CLI](https://aws.amazon.com/cli/)
 3. [jq](https://stedolan.github.io/jq/)
