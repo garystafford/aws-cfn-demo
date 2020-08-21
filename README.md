@@ -31,6 +31,8 @@ The demonstration requires you have an AWS account with the proper level of acce
 3. [jq](https://stedolan.github.io/jq/)
 4. [Python](https://www.python.org/)
 
+Note, the demo was built on a Mac. It should also work with Linux. Some commands may need to be modified for Windows, including the use of the data creation Shell script.
+
 ## Basic CloudFormation Functions using the AWS CLI
 
 Manually perform CloudFormation functions, without the use of a proper CI/CD pipeline.
@@ -215,9 +217,20 @@ Pipeline should automatically start. If not use the following command.
 aws codepipeline start-pipeline-execution --name CloudFormationDemo
 ```
 
-Manually approve the changeset in the new Amazon CodePipeline.
+Manually approve the CloudFormation Change set in the new Amazon CodePipeline Deploy stage, using the Amazon Management Console. Once the pipelines completes, the stack is deployed.
 
-__Step 08__
+__Step 08 (_optional_)__
+
+To test the newly deployed resources, put test data into the newly created Amazon DynamoDB `Books` table, using the newly created AWS Lambda function. From your local command line, execute the following commands.
+
+```bash
+cd data
+sh ./put_book.sh
+```
+
+Check the Amazon DynamoDB `Books` table. It should now have (6) items.
+
+__Step 09__
 
 Create a change. Copy revised contents file to current template.
 
