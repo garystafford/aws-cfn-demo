@@ -92,7 +92,7 @@ aws cloudformation detect-stack-drift \
     --stack-name cfn-demo-dynamo
 ```
 
-May take a minutes...
+May take a minute to complete.
 
 ```bash
 aws cloudformation describe-stack-resource-drifts \
@@ -100,6 +100,15 @@ aws cloudformation describe-stack-resource-drifts \
 ```
 
 Look for a line in the output similar to `"StackResourceDriftStatus": "IN_SYNC",`.
+
+__Step 05__
+
+Delete the stack before continuing.
+
+```bash
+aws cloudformation delete-stack \
+    --stack-name cfn-demo-dynamo
+```
 
 ## Getting Started with AWS CodePipeline Demo
 
