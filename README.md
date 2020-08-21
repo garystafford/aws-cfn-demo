@@ -177,7 +177,7 @@ git config --global credential.UseHttpPath true
 
 __Step 05__
 
-Clone the CodeCommit repository/project, `cfn-demo-repo`.
+Clone the CodeCommit repository, `cfn-demo-repo`. I have used `us-east-1`. Please confirm your exact URL for HTTPS or SSH, using the AWS CodeCommit Console.
 
 ```bash
 # for https:
