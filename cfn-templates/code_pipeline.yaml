@@ -109,7 +109,6 @@ Resources:
                 Provider: Manual
               Configuration:
                 CustomData: Comments on the manual approval
-                # ExternalEntityLink: http://my-url.com
                 NotificationArn: !Ref DemoSNSTopic
               RunOrder: 2
             - Name: Execute_Change_Set
