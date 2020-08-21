@@ -12,6 +12,8 @@ Current linting and validation testing strategy includes the use of the followin
 3. `jsonlint` (`php-jsonlint`) - CloudFormation template config (JSON)
 4. `cloudformation validate-template` - CloudFormation template
 
+Future use cases to include AWS [`taskcat`](https://github.com/aws-quickstart/taskcat).
+
 ## Helpful AWS CLI Commands
 
 ```bash
