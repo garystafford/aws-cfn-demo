@@ -207,7 +207,7 @@ Commit and push the source code files to the new AWS CodeCommit repository.
 
 ```bash
 git add -A
-git commit -m"Initial commit"
+git commit -m "Initial commit"
 git push
 ```
 
@@ -249,7 +249,7 @@ Create a change. Copy revised contents file to current template.
 cat dynamo_revisions.yaml > dynamo.yaml
 
 git add -A
-git commit -m"Enable TTL and add Tags"
+git commit -m "Enable TTL and add Tags to DynamoDB table"
 git push
 ```
 
