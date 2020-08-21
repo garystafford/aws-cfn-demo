@@ -8,7 +8,7 @@ Demonstration of an IaC CI/CD pipeline. Use [AWS CloudFormation](https://docs.aw
 
 The demonstration is useful for comparing the advantages of Continuous Integration and Continuous Delivery (CI/CD), Infrastructure as Code (IaC), and pipeline automation, to using the [AWS Command Line Interface](https://aws.amazon.com/cli/) (AWS CLI) in an ad hoc fashion to execute similar CloudFormation functionality.
 
-Current linting and validation testing tools demonstrated herein, include the use of the following:
+Current linting and validation testing tools demonstrated herein, include the following:
 1. [`yamllint`](https://yamllint.readthedocs.io/en/stable/#) - CloudFormation template
 2. [`cfn-lint`](https://github.com/aws-cloudformation/cfn-python-lint) - CloudFormation template 
 3. [`jsonlint`](http://manpages.ubuntu.com/manpages/cosmic/man1/jsonlint-php.1.html) (`php-jsonlint`) - CloudFormation template config (JSON)
