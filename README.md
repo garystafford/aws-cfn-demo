@@ -159,8 +159,10 @@ Optional, remove older CodeCommit credentials and ssh entries, if necessary.
 git config --global credential.helper osxkeychain
 ```
 
+For ssh issues, try deleting entry starting with `git-codecommit.us-east-1.amazonaws.com`.
+
 ```bash
-nano ~/.ssh/known_hosts
+vim ~/.ssh/known_hosts
 ```
 ---
 
