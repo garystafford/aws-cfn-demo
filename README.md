@@ -268,9 +268,11 @@ aws cloudformation delete-stack --stack-name cfn-demo-dynamo
 
 aws cloudformation delete-stack --stack-name cfn-demo-code-pipeline
 aws cloudformation delete-stack --stack-name cfn-demo-code-commit
+```
 
-# manaully delete HTTPS Git credentials for AWS CodeCommit 
-# from CodeCommitPowerUser from console or next step will fail
+Manually delete 'HTTPS Git credentials for AWS CodeCommit' entry from AWS IAM User, `CodeCommitUser`,  using the AWS Management Console, or next step will fail.
+
+```bash
 aws cloudformation delete-stack --stack-name cfn-demo-iam
 ```
 
