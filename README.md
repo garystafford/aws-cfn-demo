@@ -1,4 +1,4 @@
-# AWS CloudFormation Demonstration
+# AWS CloudFormation CI/CD Demonstration
 
 _work in progress..._
 
@@ -6,12 +6,25 @@ Demonstration of an Infrastructure as Code (IaC) CI/CD pipeline. Use AWS CloudFo
 
 Compare the use of a pipeline with using the AWS CLI to execute similar CloudFormation functionality.
 
+Current linting and validation testing strategy includes the use of the following:
+1. `yamllint` - CloudFormation template
+2. `cfn-lint` - CloudFormation template 
+3. `jsonlint` (`php-jsonlint`) - CloudFormation template config (JSON)
+4. `cloudformation validate-template` - CloudFormation template
+
 ## Helpful AWS CLI Commands
 
 ```bash
 aws cloudformation help
 aws cloudformation <command> help
 ```
+
+## Assumptions
+
+Demo assumes you have an AWS account with the proper level of access to create the required resources, and the following tools installed locally:
+1. git
+2. AWS CLI
+3. jq
 
 ## Basic CloudFormation Functions using the AWS CLI
 
