@@ -150,7 +150,7 @@ cat ~/.ssh/id_rsa.pub | pbcopy
 ```
 
 ---
-Optional, remove older CodeCommit credentials and ssh entries, if necessary.
+Optional, remove older CodeCommit credentials and ssh entries, if you are getting log in issues with AWS CodeCommit.
 
 - <https://docs.aws.amazon.com/codecommit/latest/userguide/troubleshooting-ch.html#troubleshooting-macoshttps>  
 - <https://stackoverflow.com/a/20195558/580268>  
