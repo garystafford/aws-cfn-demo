@@ -5,12 +5,11 @@ Description: >-
 Resources:
   CodeCommitPowerUserGroup:
     Type: "AWS::IAM::Group"
-    DependsOn: CodeCommitPowerUser
     Properties:
       ManagedPolicyArns: !Join
         - ""
         - - "arn:aws:iam::aws:policy/"
-          - !Ref AWSCodeCommitPowerUser
+          - !Ref CodeCommitPowerUser
   CodeCommitPowerUser:
     Type: "AWS::IAM::User"
     Properties:
@@ -24,7 +23,6 @@ Resources:
         Ref: CodeCommitPowerUser
   AddUserToGroup:
     Type: "AWS::IAM::UserToGroupAddition"
-    DependsOn: CodeCommitPowerUserGroup
     Properties:
       GroupName:
         Ref: CodeCommitPowerUserGroup
