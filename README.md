@@ -185,8 +185,8 @@ Copy source code files into new CodeCommit repository from this project. Make su
 ```bash
 cd ../cfn-demo-repo
 
-cp ../aws-cfn-demo/code-commit-source-code/*.* . && \
-cp ../aws-cfn-demo/code-commit-source-code/.gitignore . && \
+cp ../aws-cfn-demo/code-commit-source-code/*.* .
+cp ../aws-cfn-demo/code-commit-source-code/.gitignore .
 cp -R ../aws-cfn-demo/code-commit-source-code/data/ ./data
 ```
 
