@@ -35,7 +35,7 @@ The demonstration requires you have an AWS account with the proper level of acce
 
 Manually perform CloudFormation functions, without the use of a proper CI/CD pipeline.
 
-Step 01:
+__Step 01__
 
 Create the CloudFormation stack from the template.
 
@@ -50,7 +50,7 @@ aws cloudformation describe-stack-events \
     --stack-name cfn-demo-dynamo | jq .
 ```
 
-Step 02:
+__Step 02__
 
 Make arbitrary changes to the template and update stack.
 
@@ -62,7 +62,7 @@ aws cloudformation update-stack \
                ParameterKey=WriteCapacityUnits,ParameterValue=15
 ```
 
-Step 03:
+__Step 03__
 
 Create and execute a stack change set using AWS CLI.
 
@@ -81,7 +81,7 @@ aws cloudformation execute-change-set \
     --change-set-name demo-change-set
 ```
 
-Step 04:
+__Step 04__
 
 Detect stack drift using AWS CLI. First, make an arbitrary change to the stack's resources, using the AWS Management Console.
 
@@ -101,7 +101,7 @@ Look for a line in the output similar to `"StackResourceDriftStatus": "IN_SYNC",
 
 ## Getting Started with AWS CodePipeline Demo
 
-Step 01:
+__Step 01__
 
 Provision the  [AWS CodeCommit](https://aws.amazon.com/codecommit/) IAM User and Group.
 ```bash
@@ -111,7 +111,7 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
-Step 02:
+__Step 02__
 
 Provision the AWS CodeCommit project and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
 
@@ -122,13 +122,13 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
-Step 03a:
+__Step 03a__
 
 For HTTPS connection to CodeCommit:
 
 Manually configure the 'HTTPS Git credentials for AWS CodeCommit' feature for IAM User using the AWS Management Console. Can't do with CFN? 
 
-Step 03b (_optional_):
+__Step 03b (_optional_)__
 
 For SSH connection to CodeCommit:
 
@@ -153,7 +153,7 @@ nano ~/.ssh/known_hosts
 ```
 ---
 
-Step 04:
+__Step 04__
 
 Configure [Git CodeCommit credentials helper](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-https-unixes.html).
 
@@ -162,7 +162,7 @@ git config --global credential.helper '!aws codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
 ```
 
-Step 05:
+__Step 05__
 
 Clone the CodeCommit repository/project, `cfn-demo-repo`.
 
@@ -176,9 +176,9 @@ git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
 git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
 ```
 
-Ignore empty repo message.
+You will be asked for the username and password you manually created for the AWS IAM User in Step 03a, above. Ignore empty repo message when cloning the project.
 
-Step 06:
+__Step 06__
 
 Copy source code files into new CodeCommit repository, `cfn-demo-repo`, from this project. Make sure you are starting from the CodeCommit repository directory, locally.
 
@@ -198,7 +198,7 @@ git commit -m"Initial commit"
 git push
 ```
 
-Step 07:
+__Step 07__
 
 Provision the Amazon CodePipeline pipeline, `cfn-infra-pipeline`, and associated AWS resources.  Amazon SNS Topic, created by template, is not used in this demo.
 
@@ -217,7 +217,7 @@ aws codepipeline start-pipeline-execution --name CloudFormationDemo
 
 Manually approve the changeset in the new Amazon CodePipeline.
 
-Step 08:
+__Step 08__
 
 Create a change. Copy revised contents file to current template.
 
