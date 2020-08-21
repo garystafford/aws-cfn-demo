@@ -103,7 +103,7 @@ Look for a line in the output similar to `"StackResourceDriftStatus": "IN_SYNC",
 
 Step 01:
 
-Provision the Amazon CodeCommit IAM User and Group.
+Provision the  [AWS CodeCommit](https://aws.amazon.com/codecommit/) IAM User and Group.
 ```bash
 aws cloudformation create-stack \
   --stack-name cfn-demo-iam \
@@ -113,7 +113,7 @@ aws cloudformation create-stack \
 
 Step 02:
 
-Provision the Amazon CodeCommit project and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
+Provision the AWS CodeCommit project and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
 
 ```bash
 aws cloudformation create-stack \
@@ -155,7 +155,7 @@ nano ~/.ssh/known_hosts
 
 Step 04:
 
-Configure Git CodeCommit credentials helper.
+Configure [Git CodeCommit credentials helper](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-https-unixes.html).
 
 ```bash
 git config --global credential.helper '!aws codecommit credential-helper $@'
@@ -164,7 +164,7 @@ git config --global credential.UseHttpPath true
 
 Step 05:
 
-Clone the CodeCommit repository/project.
+Clone the CodeCommit repository/project, `cfn-demo-repo`.
 
 ```bash
 # for https:
@@ -180,7 +180,7 @@ Ignore empty repo message.
 
 Step 06:
 
-Copy source code files into new CodeCommit repository from this project. Make sure you are starting from the CodeCommit repository directory, locally.
+Copy source code files into new CodeCommit repository, `cfn-demo-repo`, from this project. Make sure you are starting from the CodeCommit repository directory, locally.
 
 ```bash
 cd ../cfn-demo-repo
