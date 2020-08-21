@@ -72,7 +72,7 @@ Create and execute a stack change set using AWS CLI.
 aws cloudformation create-change-set \
     --stack-name cfn-demo-dynamo \
     --change-set-name demo-change-set \
-    --template-body file://dynamo_revisions.yaml.yaml \
+    --template-body file://dynamo_revisions.yaml \
     --parameters ParameterKey=ReadCapacityUnits,ParameterValue=5 \
                  ParameterKey=WriteCapacityUnits,ParameterValue=15
 ```
