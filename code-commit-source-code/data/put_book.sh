@@ -1,3 +1,8 @@
+# Author: Gary A. Stafford
+# Put data into Amazon DynamoDB table, then scan to confirm
+# Use: sh ./put_book.sh
+
+
 # get new function name
 # FUNCTION=$(aws dynamodb list-tables | grep cfn-demo-dynamo-BookTable | sed -e 's/^[ \t]*//' | tr -d '"')
 FUNCTION=$(aws lambda list-functions | jq -r '.[] | .[] | select(.FunctionName | contains("cfn-demo-dynamo-LambdaFunction")) .FunctionName')
