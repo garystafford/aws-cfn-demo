@@ -63,9 +63,9 @@ aws cloudformation execute-change-set \
     --change-set-name demo-change-set
 ```
 
-Step 03:
+Step 04:
 
-Detect stack drift using AWS CLI.
+Detect stack drift using AWS CLI. First, make an arbitrary change to the stack's resources, using the AWS Management Console.
 
 ```bash
 aws cloudformation detect-stack-drift \
@@ -85,7 +85,7 @@ Look for a line in the output similar to `"StackResourceDriftStatus": "IN_SYNC",
 
 Step 01:
 
-Provision Amazon CodeCommit IAM User and Group.
+Provision the Amazon CodeCommit IAM User and Group.
 ```bash
 aws cloudformation create-stack \
   --stack-name cfn-demo-iam \
@@ -95,7 +95,7 @@ aws cloudformation create-stack \
 
 Step 02:
 
-Provision Amazon CodeCommit Project and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
+Provision the Amazon CodeCommit project and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
 
 ```bash
 aws cloudformation create-stack \
@@ -108,13 +108,13 @@ Step 03a:
 
 For HTTPS connection to CodeCommit:
 
-Manually create 'HTTPS Git credentials for AWS CodeCommit' for IAM User using the AWS Management Console. Can't do with CFN? 
+Manually configure the 'HTTPS Git credentials for AWS CodeCommit' feature for IAM User using the AWS Management Console. Can't do with CFN? 
 
 Step 03b (_optional_):
 
 For SSH connection to CodeCommit:
 
-Manually upload 'SSH keys for AWS CodeCommit' public key for IAM User using the AWS Management Console. Can't do with CFN?
+Manually configure the 'SSH keys for AWS CodeCommit' public key feature for IAM User using the AWS Management Console. Can't do with CFN?
 
 ```bash
 cat ~/.ssh/id_rsa.pub | pbcopy
@@ -151,12 +151,14 @@ Clone the CodeCommit repository/project.
 ```bash
 # for https:
 git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
-
-# or for ssh:
-git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
-
-# ignore empty repo message...
 ```
+
+```bash
+# or optional, for ssh:
+git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
+```
+
+Ignore empty repo message.
 
 Step 06:
 
@@ -164,12 +166,13 @@ Copy source code files into new CodeCommit repository from this project. Make su
 
 ```bash
 cd ../cfn-demo-repo
-cp ../aws-cfn-demo/code-commit-source-code/*.* .
-cp ../aws-cfn-demo/code-commit-source-code/.gitignore .
+
+cp ../aws-cfn-demo/code-commit-source-code/*.* . && \
+cp ../aws-cfn-demo/code-commit-source-code/.gitignore . && \
 cp -R ../aws-cfn-demo/code-commit-source-code/data/ ./data
 ```
 
-Commit files in the `code-commit-source-code` directory to the new AWS CodeCommit repository.
+Commit and push the source code files to the new AWS CodeCommit repository.
 
 ```bash
 git add -A
@@ -179,7 +182,7 @@ git push
 
 Step 07:
 
-Provision Amazon CodePipeline and associated AWS resources.  Amazon SNS Topic, created by template, is not used in this demo.
+Provision the Amazon CodePipeline pipeline, `cfn-infra-pipeline`, and associated AWS resources.  Amazon SNS Topic, created by template, is not used in this demo.
 
 ```bash
 aws cloudformation create-stack \
