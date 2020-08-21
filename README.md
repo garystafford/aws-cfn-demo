@@ -2,33 +2,126 @@
 
 _work in progress..._
 
-Demonstration of an Infrastructure as Code (IaC) CI/CD pipeline. Use AWS CloudFormation to create AWS CodePipeline pipeline and associated resources. Then, use the pipeline to test and deploy AWS resources, using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
+Demonstration of an Infrastructure as Code (IaC) CI/CD pipeline. Use AWS CloudFormation to create an AWS CodePipeline pipeline and associated AWS resources. Then, use the pipeline to test and deploy AWS resources, using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
 
 Compare the use of a pipeline with using the AWS CLI to execute similar CloudFormation functionality.
 
+## Helpful AWS CLI Commands
+
+```bash
+aws cloudformation help
+aws cloudformation <command> help
+```
+
+## Basic CloudFormation Functions using the AWS CLI
+
+Manually perform CloudFormation functions, without the use of a proper CI/CD pipeline.
+
+Step 01:
+
+Create the CloudFormation stack from the template.
+
+```bash
+aws cloudformation create-stack \
+  --stack-name cfn-demo-dynamo \
+  --template-body file://dynamo.yaml \
+  --parameters ParameterKey=ReadCapacityUnits,ParameterValue=10 \
+               ParameterKey=WriteCapacityUnits,ParameterValue=25
+
+aws cloudformation describe-stack-events \
+    --stack-name cfn-demo-dynamo | jq .
+```
+
+Step 02:
+
+Make arbitrary changes to the template and update stack.
+
+```bash
+aws cloudformation update-stack \
+  --stack-name cfn-demo-dynamo \
+  --template-body file://dynamo.yaml \
+  --parameters ParameterKey=ReadCapacityUnits,ParameterValue=5 \
+               ParameterKey=WriteCapacityUnits,ParameterValue=15
+```
+
+Step 03:
+
+Create and execute a stack change set using AWS CLI.
+
+```bash
+aws cloudformation create-change-set \
+    --stack-name cfn-demo-dynamo \
+    --change-set-name demo-change-set \
+    --template-body file://dynamo_revisions.yaml.yaml \
+    --parameters ParameterKey=ReadCapacityUnits,ParameterValue=5 \
+                 ParameterKey=WriteCapacityUnits,ParameterValue=15
+```
+
+```bash
+aws cloudformation execute-change-set \
+    --stack-name cfn-demo-dynamo \
+    --change-set-name demo-change-set
+```
+
+Step 03:
+
+Detect stack drift using AWS CLI.
+
+```bash
+aws cloudformation detect-stack-drift \
+    --stack-name cfn-demo-dynamo
+```
+
+May take a minutes...
+
+```bash
+aws cloudformation describe-stack-resource-drifts \
+    --stack-name cfn-demo-dynamo
+```
+
+Look for a line in the output similar to `"StackResourceDriftStatus": "IN_SYNC",`.
+
 ## Getting Started with AWS CodePipeline Demo
 
+Step 01:
+
+Provision Amazon CodeCommit IAM User and Group.
 ```bash
 aws cloudformation create-stack \
   --stack-name cfn-demo-iam \
   --template-body file://cfn-templates/code_commit_iam.yaml \
   --capabilities CAPABILITY_IAM
+```
 
+Step 02:
+
+Provision Amazon CodeCommit Project and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
+
+```bash
 aws cloudformation create-stack \
   --stack-name cfn-demo-code-commit \
   --template-body file://cfn-templates/code_commit.yaml \
   --capabilities CAPABILITY_IAM
 ```
 
-For HTTPS: Manually create 'HTTPS Git credentials for AWS CodeCommit' for IAM User. Can't do with CFN?  
+Step 03a:
 
-For SSH: Manually upload 'SSH keys for AWS CodeCommit' public key for IAM User. Can't do with CFN?
+For HTTPS connection to CodeCommit:
+
+Manually create 'HTTPS Git credentials for AWS CodeCommit' for IAM User using the AWS Management Console. Can't do with CFN? 
+
+Step 03b (_optional_):
+
+For SSH connection to CodeCommit:
+
+Manually upload 'SSH keys for AWS CodeCommit' public key for IAM User using the AWS Management Console. Can't do with CFN?
 
 ```bash
 cat ~/.ssh/id_rsa.pub | pbcopy
 ```
 
-Remove older codecommit cred entries if necessary
+---
+Optional, remove older CodeCommit credentials and ssh entries, if necessary.
 
 - <https://docs.aws.amazon.com/codecommit/latest/userguide/troubleshooting-ch.html#troubleshooting-macoshttps>  
 - <https://stackoverflow.com/a/20195558/580268>  
@@ -40,21 +133,37 @@ git config --global credential.helper osxkeychain
 ```bash
 nano ~/.ssh/known_hosts
 ```
+---
+
+Step 04:
+
+Configure Git CodeCommit credentials helper.
 
 ```bash
 git config --global credential.helper '!aws codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
+```
 
+Step 05:
+
+Clone the CodeCommit repository/project.
+
+```bash
 # for https:
 git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
-
-# ignore empty repo message...
 
 # or for ssh:
 git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
 
+# ignore empty repo message...
+```
 
-cd cfn-demo-repo
+Step 06:
+
+Copy source code files into new CodeCommit repository from this project. Make sure you are starting from the CodeCommit repository directory, locally.
+
+```bash
+cd ../cfn-demo-repo
 cp ../aws-cfn-demo/code-commit-source-code/*.* .
 cp ../aws-cfn-demo/code-commit-source-code/.gitignore .
 cp -R ../aws-cfn-demo/code-commit-source-code/data/ ./data
@@ -68,7 +177,9 @@ git commit -m"Initial commit"
 git push
 ```
 
-The `cfn-demo-code-commit` stack must succeed before creating next stack!
+Step 07:
+
+Provision Amazon CodePipeline and associated AWS resources.  Amazon SNS Topic, created by template, is not used in this demo.
 
 ```bash
 aws cloudformation create-stack \
@@ -77,62 +188,33 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
+Pipeline should automatically start. If not use the following command.
+
 ```bash
 aws codepipeline start-pipeline-execution --name CloudFormationDemo
 ```
 
-## Helpful AWS CLI Commands
+Manually approve the changeset in the new Amazon CodePipeline.
+
+Step 08:
+
+Create a change. Copy revised contents file to current template.
 
 ```bash
-aws cloudformation help
-aws cloudformation create-stack help
+cat dynamo_revisions.yaml > dynamo.yaml
+
+git add -A
+git commit -m"Enable TTL and add Tags"
+git push
 ```
 
-## Create and Update Demo Stack using AWS CLI
+Pipeline should automatically start. If not use the following command.
 
 ```bash
-aws cloudformation create-stack \
-  --stack-name cfn-demo-dynamo \
-  --template-body file://dynamo.yaml \
-  --parameters ParameterKey=ReadCapacityUnits,ParameterValue=10 \
-               ParameterKey=WriteCapacityUnits,ParameterValue=25
-
-aws cloudformation describe-stack-events \
-    --stack-name cfn-demo-dynamo | jq .
-
-aws cloudformation update-stack \
-  --stack-name cfn-demo-dynamo \
-  --template-body file://dynamo.yaml \
-  --parameters ParameterKey=ReadCapacityUnits,ParameterValue=5 \
-               ParameterKey=WriteCapacityUnits,ParameterValue=15
+aws codepipeline start-pipeline-execution --name CloudFormationDemo
 ```
 
-## Create and Execute Demo Stack Change Set using AWS CLI
-
-```bash
-aws cloudformation create-change-set \
-    --stack-name cfn-demo-dynamo \
-    --change-set-name demo-change-set \
-    --template-body file://dynamo_v2.yaml \
-    --parameters ParameterKey=ReadCapacityUnits,ParameterValue=5 \
-                 ParameterKey=WriteCapacityUnits,ParameterValue=15
-
-aws cloudformation execute-change-set \
-    --stack-name cfn-demo-dynamo \
-    --change-set-name demo-change-set
-```
-
-## Detect Stack Drift using AWS CLI
-
-```bash
-aws cloudformation detect-stack-drift \
-    --stack-name cfn-demo-dynamo
-
-aws cloudformation describe-stack-resource-drifts \
-    --stack-name cfn-demo-dynamo
-```
-
-## Delete Demo Stacks using AWS CLI
+## Delete CloudFormation Stacks using AWS CLI
 
 Delete one stack at a time, letting each one finish completely, before proceeding to the next stack.
 
