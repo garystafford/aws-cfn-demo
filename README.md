@@ -23,12 +23,13 @@ aws cloudformation help
 aws cloudformation <command> help
 ```
 
-## Assumptions
+## Prerequisites
 
-Demo assumes you have an AWS account with the proper level of access to create the required resources, and the following tools installed locally:
+The demonstration requires you have an AWS account with the proper level of access to create the required resources, and the following tools installed locally.
 1. [git](https://git-scm.com/)
 2. [AWS CLI](https://aws.amazon.com/cli/)
 3. [jq](https://stedolan.github.io/jq/)
+4. [Python](https://www.python.org/)
 
 ## Basic CloudFormation Functions using the AWS CLI
 
