@@ -8,14 +8,14 @@ Parameters:
     Type: Number
     Default: 5
     MinValue: 5
-    MaxValue: 10000
+    MaxValue: 1000
     ConstraintDescription: must be between 5 and 10000
   WriteCapacityUnits:
     Description: Provisioned write throughput
     Type: Number
-    Default: 10
+    Default: 5
     MinValue: 5
-    MaxValue: 10000
+    MaxValue: 1000
     ConstraintDescription: must be between 5 and 100000
 Resources:
   BookTable:
@@ -34,6 +34,14 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: !Ref ReadCapacityUnits
         WriteCapacityUnits: !Ref WriteCapacityUnits
+      TimeToLiveSpecification:
+        AttributeName: TimeToLive
+        Enabled: true
+      Tags:
+        - Key: Project
+          Value: CloudFormation Demo
+        - Key: Owner
+          Value: DBA Team
   LambdaFunction:
     Type: "AWS::Lambda::Function"
     Properties:

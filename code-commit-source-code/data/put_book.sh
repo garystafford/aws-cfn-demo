@@ -3,7 +3,7 @@
 FUNCTION=$(aws lambda list-functions | jq -r '.[] | .[] | select(.FunctionName | contains("cfn-demo-dynamo-LambdaFunction")) .FunctionName')
 
 # loop through all books test
-jq -c '.[]' data.json | while read -r book; do
+jq -c '.[]' books.json | while read -r book; do
   echo "$book"
   aws lambda invoke \
     --function-name "$FUNCTION" \
