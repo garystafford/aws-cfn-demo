@@ -96,5 +96,5 @@ Resources:
                 Resource: !GetAtt BookTable.Arn
 Outputs:
   TableName:
-    Value: "BookTable"
+    Value: !Ref BookTable
     Description: Name of the newly created DynamoDB table
