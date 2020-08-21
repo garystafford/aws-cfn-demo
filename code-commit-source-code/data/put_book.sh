@@ -21,6 +21,6 @@ aws lambda invoke \
   output.log
 
 #TABLE=$(aws dynamodb list-tables | grep cfn-demo-dynamo-BookTable | sed -e 's/^[ \t]*//' | tr -d '"')
-TABLE=$(aws dynamodb list-tables | jq -r '.[] | .[] | select(. | contains("cfn"))')
+TABLE=$(aws dynamodb list-tables | jq -r '.[] | .[] | select(. | contains("cfn-demo-dynamo-BookTable"))')
 
 aws dynamodb scan --table-name "$TABLE"

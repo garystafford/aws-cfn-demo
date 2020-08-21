@@ -129,3 +129,4 @@ aws cloudformation delete-stack \
 - <https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-cloudformation-codecommit.html>
 - <https://aws.amazon.com/blogs/devops/custom-lookup-using-aws-lambda-and-amazon-dynamodb/>
 - <https://docs.aws.amazon.com/codebuild/latest/userguide/jenkins-plugin.html>
+- <https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/deploying.applications.html>
