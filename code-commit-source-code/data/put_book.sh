@@ -4,7 +4,7 @@
 
 
 # get new function name
-# FUNCTION=$(aws dynamodb list-tables | grep cfn-demo-dynamo-BookTable | sed -e 's/^[ \t]*//' | tr -d '"')
+# FUNCTION=$(aws dynamodb list-tables | grep cfn-demo-dynamo-Books | sed -e 's/^[ \t]*//' | tr -d '"')
 FUNCTION=$(aws lambda list-functions | jq -r '.[] | .[] | select(.FunctionName | contains("cfn-demo-dynamo-LambdaFunction")) .FunctionName')
 
 # loop through all books test
@@ -25,7 +25,7 @@ aws lambda invoke \
   --cli-binary-format raw-in-base64-out \
   output.log
 
-#TABLE=$(aws dynamodb list-tables | grep cfn-demo-dynamo-BookTable | sed -e 's/^[ \t]*//' | tr -d '"')
-TABLE=$(aws dynamodb list-tables | jq -r '.[] | .[] | select(. | contains("cfn-demo-dynamo-BookTable"))')
+#TABLE=$(aws dynamodb list-tables | grep cfn-demo-dynamo-Books | sed -e 's/^[ \t]*//' | tr -d '"')
+TABLE=$(aws dynamodb list-tables | jq -r '.[] | .[] | select(. | contains("cfn-demo-dynamo-Books"))')
 
 aws dynamodb scan --table-name "$TABLE"
