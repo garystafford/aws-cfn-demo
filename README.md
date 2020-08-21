@@ -4,7 +4,7 @@ _work in progress..._
 
 ## Overview
 
-Demonstration of an IaC CI/CD pipeline. Use AWS CloudFormation to create an AWS CodePipeline pipeline and associated AWS resources. Then, use the pipeline to test and deploy AWS resources, including Amazon DynamoDB and AWS Lambda, using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
+Demonstration of an IaC CI/CD pipeline. Use [AWS CloudFormation](https://docs.aws.amazon.com/cloudformation/index.html) to create an [AWS CodePipeline](https://aws.amazon.com/codepipeline/) pipeline and associated AWS resources. Then, use the pipeline to test and deploy AWS resources, including [Amazon DynamoDB](https://aws.amazon.com/dynamodb/) and [AWS Lambda](https://aws.amazon.com/lambda/), using a CloudFormation template, CloudFormation configuration file, and CloudFormation stack change set.
 
 The demonstration is useful for comparing the advantages of Continuous Integration and Continuous Delivery (CI/CD), Infrastructure as Code (IaC), and pipeline automation, to using the [AWS Command Line Interface](https://aws.amazon.com/cli/) (AWS CLI) in an ad hoc fashion to execute similar CloudFormation functionality.
 
@@ -26,9 +26,9 @@ aws cloudformation <command> help
 ## Assumptions
 
 Demo assumes you have an AWS account with the proper level of access to create the required resources, and the following tools installed locally:
-1. git
-2. AWS CLI
-3. jq
+1. [git](https://git-scm.com/)
+2. [AWS CLI](https://aws.amazon.com/cli/)
+3. [jq](https://stedolan.github.io/jq/)
 
 ## Basic CloudFormation Functions using the AWS CLI
 
