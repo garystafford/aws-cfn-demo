@@ -226,6 +226,8 @@ git commit -m "Initial commit"
 git push
 ```
 
+![repository](presentation/repository.png)
+
 **Step 7**
 
 Provision the Amazon CodePipeline pipeline, `cfn-infra-pipeline`, and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
@@ -255,6 +257,15 @@ cd data
 sh ./put_book.sh
 ```
 
+```text
+{"AuthorName":"Charles Dickens","BookTitle":"A Tale of Two Cities","PublishedPublished":1859,"OriginalLanguage":"English","ApproximateSales":200000000}
+{"AuthorName":"Antoine de Saint-Exupéry","BookTitle":"The Little Prince (Le Petit Prince)","PublishedPublished":1943,"OriginalLanguage":"French","ApproximateSales":150000000}
+{"AuthorName":"J. K. Rowling","BookTitle":"Harry Potter and the Philosopher’s Stone","PublishedPublished":1997,"OriginalLanguage":"English","ApproximateSales":120000000}
+{"AuthorName":"J. R. R. Tolkien","BookTitle":"The Hobbit","PublishedPublished":1937,"OriginalLanguage":"English","ApproximateSales":100000000}
+{"AuthorName":"Agatha Christie","BookTitle":"And Then There Were None","PublishedPublished":1939,"OriginalLanguage":"English","ApproximateSales":100000000}
+{"AuthorName":"Cao Xueqin","BookTitle":"Dream of the Red Chamber (紅樓夢)","PublishedPublished":1791,"OriginalLanguage":"Chinese","ApproximateSales":100000000}
+```
+
 Check the Amazon DynamoDB `Books` table. It should now have (6) items.
 
 **Step 9**
@@ -276,6 +287,7 @@ aws codepipeline start-pipeline-execution \
     --name CloudFormationDemo
 ```
 
+![pipeline](presentation/pipeline.png)
 ## Delete CloudFormation Stacks using AWS CLI
 
 Delete one stack at a time, letting each one finish completely, before proceeding to the next stack.
