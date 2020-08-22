@@ -226,7 +226,7 @@ git commit -m "Initial commit"
 git push
 ```
 
-![repository](presentation/repository.png)
+![CodeCommit Repository](presentation/repository.png)
 
 ### Step  7
 
@@ -268,6 +268,8 @@ sh ./put_book.sh
 
 Check the Amazon DynamoDB `Books` table. It should now have (6) items.
 
+![DynamoDB Table](presentation/dynamodb.png)
+
 ### Step  9
 
 Create a change. Copy revised contents file to current template.
@@ -287,7 +289,7 @@ aws codepipeline start-pipeline-execution \
     --name CloudFormationDemo
 ```
 
-![pipeline](presentation/pipeline_2.png)
+![CodePipeline](presentation/pipeline_2.png)
 
 ## Delete CloudFormation Stacks using AWS CLI
 
