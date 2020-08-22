@@ -287,7 +287,7 @@ aws codepipeline start-pipeline-execution \
     --name CloudFormationDemo
 ```
 
-![pipeline](presentation/pipeline.png)
+![pipeline](presentation/pipeline_2.png)
 
 ## Delete CloudFormation Stacks using AWS CLI
 
