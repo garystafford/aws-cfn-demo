@@ -8,12 +8,14 @@ Demonstration of an IaC CI/CD pipeline. Use [AWS CloudFormation](https://docs.aw
 
 The demonstration is useful for comparing the advantages of Continuous Integration and Continuous Delivery (CI/CD), Infrastructure as Code (IaC), and pipeline automation, to using the [AWS Command Line Interface](https://aws.amazon.com/cli/) (AWS CLI) in an ad hoc fashion to execute similar CloudFormation functionality.
 
+![IaC DevOps](presentation/CloudFormation_DevOps.png)
 
 ### IaC Testing
 
 Current linting and validation testing tools demonstrated herein, include the following:
+
 1. [`yamllint`](https://yamllint.readthedocs.io/en/stable/#) - CloudFormation template
-2. [`cfn-lint`](https://github.com/aws-cloudformation/cfn-python-lint) - CloudFormation template 
+2. [`cfn-lint`](https://github.com/aws-cloudformation/cfn-python-lint) - CloudFormation template
 3. [`jsonlint`](http://manpages.ubuntu.com/manpages/cosmic/man1/jsonlint-php.1.html) (`php-jsonlint`) - CloudFormation template config (JSON)
 4. [`cloudformation validate-template`](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/validate-template.html) - CloudFormation template
 
@@ -33,6 +35,7 @@ aws cloudformation <command> help
 ## Prerequisites
 
 The demonstration requires you have an AWS account with the proper level of access to create the required resources, and the following tools installed locally:
+
 1. [git](https://git-scm.com/)
 2. [AWS CLI](https://aws.amazon.com/cli/)
 3. [jq](https://stedolan.github.io/jq/)
@@ -44,7 +47,7 @@ Note, the demo was built on a Mac. It should also work with Linux. Some commands
 
 Manually perform CloudFormation functions, without the use of a proper CI/CD pipeline.
 
-__Step 01__
+**Step 1**
 
 Create the CloudFormation stack from the template.
 
@@ -59,7 +62,7 @@ aws cloudformation describe-stack-events \
     --stack-name cfn-demo-dynamo | jq .
 ```
 
-__Step 02__
+**Step 2**
 
 Make arbitrary changes to the template and update stack.
 
@@ -71,7 +74,7 @@ aws cloudformation update-stack \
                ParameterKey=WriteCapacityUnits,ParameterValue=15
 ```
 
-__Step 03__
+**Step 3**
 
 Create and execute a stack change set using AWS CLI.
 
@@ -90,7 +93,7 @@ aws cloudformation execute-change-set \
     --change-set-name demo-change-set
 ```
 
-__Step 04__
+**Step 4**
 
 Detect stack drift using AWS CLI. First, make an arbitrary change to the stack's resources, using the AWS Management Console.
 
@@ -108,7 +111,7 @@ aws cloudformation describe-stack-resource-drifts \
 
 Look for a line in the output similar to `"StackResourceDriftStatus": "IN_SYNC",`.
 
-__Step 05__
+**Step 5**
 
 Delete the stack before continuing.
 
@@ -119,9 +122,10 @@ aws cloudformation delete-stack \
 
 ## Getting Started with AWS CodePipeline Demo
 
-__Step 01__
+**Step 1**
 
-Provision the  [AWS CodeCommit](https://aws.amazon.com/codecommit/) IAM User and Group.
+Provision the [AWS CodeCommit](https://aws.amazon.com/codecommit/) IAM User and Group.
+
 ```bash
 aws cloudformation create-stack \
   --stack-name cfn-demo-iam \
@@ -129,7 +133,7 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
-__Step 02__
+**Step 2**
 
 Provision the AWS CodeCommit project and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
 
@@ -140,13 +144,13 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
-__Step 03a__
+**Step 3a**
 
 For HTTPS connection to CodeCommit:
 
-Manually configure the 'HTTPS Git credentials for AWS CodeCommit' feature for IAM User using the AWS Management Console. Can't do with CFN? 
+Manually configure the 'HTTPS Git credentials for AWS CodeCommit' feature for IAM User using the AWS Management Console. Can't do with CFN?
 
-__Step 03b (_optional_)__
+**Step 3b (_optional_)**
 
 For SSH connection to CodeCommit:
 
@@ -157,10 +161,11 @@ cat ~/.ssh/id_rsa.pub | pbcopy
 ```
 
 ---
+
 Optional, remove older CodeCommit credentials and ssh entries, if you are getting log in issues with AWS CodeCommit.
 
-- <https://docs.aws.amazon.com/codecommit/latest/userguide/troubleshooting-ch.html#troubleshooting-macoshttps>  
-- <https://stackoverflow.com/a/20195558/580268>  
+- <https://docs.aws.amazon.com/codecommit/latest/userguide/troubleshooting-ch.html#troubleshooting-macoshttps>
+- <https://stackoverflow.com/a/20195558/580268>
 
 ```bash
 git config --global credential.helper osxkeychain
@@ -171,9 +176,10 @@ For ssh issues, try deleting entry starting with `git-codecommit.us-east-1.amazo
 ```bash
 vim ~/.ssh/known_hosts
 ```
+
 ---
 
-__Step 04__
+**Step 4**
 
 Configure [Git CodeCommit credentials helper](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-https-unixes.html).
 
@@ -182,7 +188,7 @@ git config --global credential.helper '!aws codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
 ```
 
-__Step 05__
+**Step 5**
 
 Clone the CodeCommit repository, `cfn-demo-repo`. I have used `us-east-1`. Please confirm your exact URL for HTTPS or SSH, using the AWS CodeCommit Console.
 
@@ -196,9 +202,9 @@ git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
 git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
 ```
 
-You will be asked for the username and password you manually created for the AWS IAM User in Step 03a, above. Ignore empty repo message when cloning the project.
+You will be asked for the username and password you manually created for the AWS IAM User in Step 3a, above. Ignore empty repo message when cloning the project.
 
-__Step 06__
+**Step 6**
 
 Copy source code files into new CodeCommit repository, `cfn-demo-repo`, from this project. Make sure you are starting from the CodeCommit repository directory, locally.
 
@@ -218,9 +224,9 @@ git commit -m "Initial commit"
 git push
 ```
 
-__Step 07__
+**Step 7**
 
-Provision the Amazon CodePipeline pipeline, `cfn-infra-pipeline`, and associated AWS resources.  Amazon SNS Topic, created by template, is not used in this demo.
+Provision the Amazon CodePipeline pipeline, `cfn-infra-pipeline`, and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
 
 ```bash
 aws cloudformation create-stack \
@@ -238,7 +244,7 @@ aws codepipeline start-pipeline-execution \
 
 Manually approve the CloudFormation Change set in the new Amazon CodePipeline Deploy stage, using the Amazon Management Console. Once the pipelines completes, the stack is deployed.
 
-__Step 08 (_optional_)__
+**Step 8 (_optional_)**
 
 To test the newly deployed resources, put test data into the newly created Amazon DynamoDB `Books` table, using the newly created AWS Lambda function. From your local command line, execute the following commands.
 
@@ -249,7 +255,7 @@ sh ./put_book.sh
 
 Check the Amazon DynamoDB `Books` table. It should now have (6) items.
 
-__Step 09__
+**Step 9**
 
 Create a change. Copy revised contents file to current template.
 
@@ -287,7 +293,7 @@ aws cloudformation delete-stack \
     --stack-name cfn-demo-code-commit
 ```
 
-Manually delete 'HTTPS Git credentials for AWS CodeCommit' entry from AWS IAM User, `CodeCommitUser`,  using the AWS Management Console, or next step will fail.
+Manually delete 'HTTPS Git credentials for AWS CodeCommit' entry from AWS IAM User, `CodeCommitUser`, using the AWS Management Console, or next step will fail.
 
 ```bash
 aws cloudformation delete-stack \
@@ -296,10 +302,10 @@ aws cloudformation delete-stack \
 
 ## References
 
-- <https://docs.aws.amazon.com/codebuild/latest/userguide/jenkins-plugin.html>  
-- <https://github.com/stelligent/cloudformation_templates/blob/master/labs/codebuild/codebuild.yml>  
-- <https://kb.novaordis.com/index.php/AWS_CodeBuild_Buildspec>  
-- <https://github.com/adrienverge/yamllint>  
+- <https://docs.aws.amazon.com/codebuild/latest/userguide/jenkins-plugin.html>
+- <https://github.com/stelligent/cloudformation_templates/blob/master/labs/codebuild/codebuild.yml>
+- <https://kb.novaordis.com/index.php/AWS_CodeBuild_Buildspec>
+- <https://github.com/adrienverge/yamllint>
 - <https://docs.aws.amazon.com/codepipeline/latest/userguide/tutorials-cloudformation-codecommit.html>
 - <https://aws.amazon.com/blogs/devops/custom-lookup-using-aws-lambda-and-amazon-dynamodb/>
 - <https://docs.aws.amazon.com/codebuild/latest/userguide/jenkins-plugin.html>
