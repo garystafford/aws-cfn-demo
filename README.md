@@ -8,7 +8,7 @@ Demonstration of an IaC CI/CD pipeline. Use [AWS CloudFormation](https://docs.aw
 
 The demonstration is useful for comparing the advantages of Continuous Integration and Continuous Delivery (CI/CD), Infrastructure as Code (IaC), and pipeline automation, to using the [AWS Command Line Interface](https://aws.amazon.com/cli/) (AWS CLI) in an ad hoc fashion to execute similar CloudFormation functionality.
 
-![IaC DevOps](presentation/CloudFormation_DevOps_2.png)
+![IaC DevOps](presentation/CloudFormation_DevOps_3.png)
 
 <small>_*CloudWatch not yet implemented_</small>
 
