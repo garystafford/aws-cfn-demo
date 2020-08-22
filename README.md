@@ -10,7 +10,7 @@ The demonstration is useful for comparing the advantages of Continuous Integrati
 
 ![IaC DevOps](presentation/CloudFormation_DevOps_3.png)
 
-<small>_*CloudWatch not yet implemented_</small>
+<small>_\*CloudWatch not yet implemented_</small>
 
 ### IaC Testing
 
@@ -49,7 +49,7 @@ Note, the demo was built on a Mac. It should also work with Linux. Some commands
 
 Manually perform CloudFormation functions, without the use of a proper CI/CD pipeline.
 
-**Step 1**
+### Step 1
 
 Create the CloudFormation stack from the template.
 
@@ -64,7 +64,7 @@ aws cloudformation describe-stack-events \
     --stack-name cfn-demo-dynamo | jq .
 ```
 
-**Step 2**
+### Step  2
 
 Make arbitrary changes to the template and update stack.
 
@@ -76,7 +76,7 @@ aws cloudformation update-stack \
                ParameterKey=WriteCapacityUnits,ParameterValue=15
 ```
 
-**Step 3**
+### Step  3
 
 Create and execute a stack change set using AWS CLI.
 
@@ -95,7 +95,7 @@ aws cloudformation execute-change-set \
     --change-set-name demo-change-set
 ```
 
-**Step 4**
+### Step  4
 
 Detect stack drift using AWS CLI. First, make an arbitrary change to the stack's resources, using the AWS Management Console.
 
@@ -113,7 +113,7 @@ aws cloudformation describe-stack-resource-drifts \
 
 Look for a line in the output similar to `"StackResourceDriftStatus": "IN_SYNC",`.
 
-**Step 5**
+### Step  5
 
 Delete the stack before continuing.
 
@@ -124,7 +124,7 @@ aws cloudformation delete-stack \
 
 ## Getting Started with AWS CodePipeline Demo
 
-**Step 1**
+### Step  1
 
 Provision the [AWS CodeCommit](https://aws.amazon.com/codecommit/) IAM User and Group.
 
@@ -135,7 +135,7 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
-**Step 2**
+### Step  2
 
 Provision the AWS CodeCommit project and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
 
@@ -146,13 +146,13 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
-**Step 3a**
+### Step  3a
 
 For HTTPS connection to CodeCommit:
 
 Manually configure the 'HTTPS Git credentials for AWS CodeCommit' feature for IAM User using the AWS Management Console. Can't do with CFN?
 
-**Step 3b (_optional_)**
+### Step  3b (_optional_)
 
 For SSH connection to CodeCommit:
 
@@ -181,7 +181,7 @@ vim ~/.ssh/known_hosts
 
 ---
 
-**Step 4**
+### Step  4
 
 Configure [Git CodeCommit credentials helper](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-https-unixes.html).
 
@@ -190,7 +190,7 @@ git config --global credential.helper '!aws codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
 ```
 
-**Step 5**
+### Step  5
 
 Clone the CodeCommit repository, `cfn-demo-repo`. I have used `us-east-1`. Please confirm your exact URL for HTTPS or SSH, using the AWS CodeCommit Console.
 
@@ -206,7 +206,7 @@ git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/cfn-demo-repo
 
 You will be asked for the username and password you manually created for the AWS IAM User in Step 3a, above. Ignore empty repo message when cloning the project.
 
-**Step 6**
+### Step  6
 
 Copy source code files into new CodeCommit repository, `cfn-demo-repo`, from this project. Make sure you are starting from the CodeCommit repository directory, locally.
 
@@ -228,7 +228,7 @@ git push
 
 ![repository](presentation/repository.png)
 
-**Step 7**
+### Step  7
 
 Provision the Amazon CodePipeline pipeline, `cfn-infra-pipeline`, and associated AWS resources. Amazon SNS Topic, created by template, is not used in this demo.
 
@@ -248,7 +248,7 @@ aws codepipeline start-pipeline-execution \
 
 Manually approve the CloudFormation Change set in the new Amazon CodePipeline Deploy stage, using the Amazon Management Console. Once the pipelines completes, the stack is deployed.
 
-**Step 8 (_optional_)**
+### Step  8 (_optional_)
 
 To test the newly deployed resources, put test data into the newly created Amazon DynamoDB `Books` table, using the newly created AWS Lambda function. From your local command line, execute the following commands.
 
@@ -268,7 +268,7 @@ sh ./put_book.sh
 
 Check the Amazon DynamoDB `Books` table. It should now have (6) items.
 
-**Step 9**
+### Step  9
 
 Create a change. Copy revised contents file to current template.
 
@@ -288,6 +288,7 @@ aws codepipeline start-pipeline-execution \
 ```
 
 ![pipeline](presentation/pipeline.png)
+
 ## Delete CloudFormation Stacks using AWS CLI
 
 Delete one stack at a time, letting each one finish completely, before proceeding to the next stack.
